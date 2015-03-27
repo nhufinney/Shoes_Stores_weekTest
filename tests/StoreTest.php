@@ -13,8 +13,9 @@
     {
         protected function tearDown()
         {
-            Store::deleteAll();
             Brand::deleteAll();
+            Store::deleteAll();
+
         }
 
         function test_getId()

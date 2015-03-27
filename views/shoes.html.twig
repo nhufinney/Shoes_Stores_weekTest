@@ -1,0 +1,28 @@
+<h1>{{ shoes.getShoes }}</h1>
+
+    {% if stores is not empty %}
+        <p>Here are stores selling this shoes:</p>
+        <ul>
+            {% for store in stores %}
+                <li>{{ store.getStore }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    <h4>Add a new store selling this shoes:</h4>
+
+    <form action='/add_stores' method='post'>
+        <input id="shoes_id" name="shoes_id" type="hidden" value="{{ shoes.getId }}">
+        <label for="store_id">Select a store in the list</label>
+        <select id='store_id' name='store_id' type='text'>
+          {% for store in all_stores %}
+            <option value="{{ store.getId }}"> {{ store.getStore }} </option>
+          {% endfor %}
+        </select>
+        <button type='submit'>Add store</button>
+    </form>
+
+    <br><br>
+
+
+    <p><a href='/'>Home</a></p>

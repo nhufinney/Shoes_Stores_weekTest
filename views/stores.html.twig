@@ -1,0 +1,26 @@
+<h1>List of Stores in the Portland Fashion State</h1>
+
+    {% if all_stores is not empty %}
+        <ul>
+            {% for store in all_stores %}
+                <li><a href="/stores/{{ store.getId }}">{{ store.getStore }}</a></li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    <br><br>
+    <form action='/stores' method='post'>
+        <label for='store'>Add new store</label>
+        <input id='store' name='store' type='text'>
+
+        <button type='submit'>Add new</button>
+    </form>
+
+    <br> <br>
+
+    <form action='/delete_stores' method='post'>
+        <input name='_method' type='hidden' value='delete'>
+        <button type='submit'>Clear all store list</button>
+    </form>
+    <br><br>
+    <p><a href='/'>Going Home</a></p>

@@ -1,0 +1,24 @@
+
+
+<h1>List of all Spring-shoes 2015! HOT!</h1>
+
+{% if all_shoes is not empty %}
+    <ul>
+        {% for shoes in all_shoes %}
+            <li><a href="/shoes/{{ shoes.getId }}">{{ shoes.getShoes }}</a></li>
+        {% endfor %}
+    </ul>
+{% endif %}
+
+<br><br>
+
+<form action='/shoes' method='post'>
+    <label for='shoes'>Don't be an old-fashioned at Epicodus! Update a new brand shoes here</label>
+    <input id='shoes' name='shoes' type='text'>
+
+    <button type='submit'>Add a new brand</button>
+</form>
+
+<br><br>
+
+<p><a href='/'>Going Home</a></p>

@@ -68,19 +68,27 @@
             return $found_shoes;
         }
 
+        function addStore($store)
+        {
+            $GLOBALS['DB']->exec("INSERT INTO brands_stores (shoes_id, store_id) VALUES ({$this->getId()}, {$store->getId()});");
+        }
+
         function getStores()
         {
             $query = $GLOBALS['DB']->query("SELECT stores.* FROM
                 brands  JOIN brands_stores ON (brands.id =  brands_stores.shoes_id)
                         JOIN stores ON ( brands_stores.store_id = stores.id)
                         WHERE brands.id = {$this->getId()};");
-            $stores_temp = $query->fetchAll(PDO::FETCH_ASSOC);
-            $stores = array();
+            $stores_temp = $query->fetch(PDO::FETCH_ASSOC);
+            $related_stores = array();
             foreach($stores_temp as $store) {
-                $new_store = new Store($store[0]['store'], $id[0]['id']);
-                array_push($stores, $new_store);
+                $id = $store['id'];
+                $a_store = $store['store'];
+                $new_store = new Store($id, $a_store);
+                array_push($related_stores, $new_store);
             }
-            return $stores;
+            return $related_stores;
+            return $stores_temp;
         }
 
         // function update($new_shoes)
@@ -89,11 +97,11 @@
         //     $this->setShoes($new_shoes);
         // }
 
-        // function delete()
-        // {
-        //     $GLOBALS['DB']->exec("DELETE FROM shoes WHERE id = {$this->getId()};");
-        //     $GLOBALS['DB']->exec("DELETE FROM brands_stores WHERE shoes_id = {$this->getId()};");
-        // }
+        function deleteBrand()
+        {
+            $GLOBALS['DB']->exec("DELETE FROM brands WHERE id = {$this->getId()};");
+            $GLOBALS['DB']->exec("DELETE FROM brands_stores WHERE shoes_id = {$this->getId()};");
+        }
 
         // function addTask($task)
         // {
