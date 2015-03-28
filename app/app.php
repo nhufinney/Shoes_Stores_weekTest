@@ -27,14 +27,19 @@
         return $app['twig']->render('brands.html.twig', array('all_shoes' => Brand::getAll()));
     });
 
-    //app to save new brand into database
+    //save new brand of shoes into database. Do not save if duplicate values.
     $app->post("/shoes", function() use ($app) {
         $shoes = $_POST['shoes'];
         $id = null;
-        $new_shoes = new Brand($id, $shoes);
-        $new_shoes->save();
+        $result = Brand::checkAvailable($shoes);
+        if ($result = false)
+            {
+                $new_shoes = new Brand($id, $shoes);
+                $new_shoes->save();
+            }
         return $app['twig']->render('brands.html.twig', array('all_shoes' => Brand::getAll()));
     });
+
 
     //Single shoes page
     $app->get("/shoes/{id}", function($id) use ($app) {
@@ -63,8 +68,12 @@
     $app->post("/stores", function() use ($app) {
         $store = $_POST['store'];
         $id = null;
-        $new_store = new Store($id, $store);
-        $new_store->save();
+        $result = Store::checkAvailable($store);
+        if ($result = false)
+        {
+            $new_store = new Store($id, $store);
+            $new_store->save();
+        }
         return $app['twig']->render('stores.html.twig', array('all_stores' => Store::getAll()));
     });
 
@@ -74,12 +83,34 @@
         return $app['twig']->render('stores.html.twig', array('all_stores' => Store::getAll()));
     });
 
+    //Page of single store.
     $app->get("/stores/{id}", function($id) use ($app) {
         $store = Store::find($id);
         return $app['twig']->render('store.html.twig', array('store' => $store, 'related_shoes' => $store->getShoes(), 'all_shoes' => Brand::getAll()));
     });
 
+    //Add shoes in the list of shoes for the store.
+    $app->post("/add_shoes", function() use ($app) {
+        $store = Store::find($_POST['store_id']);
+        $shoes = Brand::find($_POST['shoes_id']);
+        $store->addShoes($shoes);
+        return $app['twig']->render('store.html.twig', array('store' =>$store, 'related_shoes' => $store->getShoes(), 'all_shoes' => Brand::getAll()));
+    });
 
+    //update new name for a single store
+    $app->patch("/stores/{id}", function($id) use ($app) {
+        $store_edited = $_POST['store'];
+        $store = Store::find($id);
+        $store->update($store_edited);
+        return $app['twig']->render('store.html.twig', array('store' => $store, 'related_shoes' => $store->getShoes(), 'all_shoes' => Brand::getAll()));
+    });
+
+    //delete a single store
+    $app->delete("/stores/{id}", function($id) use ($app){
+       $store = Store::find($id);
+       $store->deleteStore();
+       return $app['twig']->render('stores.html.twig', array('all_stores' => Store::getAll()));
+   });
 
     return $app;
 ?>

@@ -96,6 +96,25 @@
             return $related_stores;
         }
 
+        static function checkAvailable($check_shoes)
+        {
+            $answer=true;
+            $shoes_array= array();
+            $all_shoes = Brand::getAll();
+
+            foreach ($all_shoes as $shoes)
+            {
+                $one = $shoes->getShoes();
+                array_push($shoes_array, $one);
+            }
+
+            if (in_array($check_shoes, $shoes_array))
+            {
+                $answer= false;
+            }
+            return $answer;
+        }
+
     }
 
 ?>

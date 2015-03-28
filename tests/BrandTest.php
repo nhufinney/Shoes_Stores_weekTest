@@ -15,8 +15,6 @@
         {
             Brand::deleteAll();
             Store::deleteAll();
-            // Brand::deleteBrand();
-            // Store::deleteStore();
         }
 
         function test_getId()
@@ -202,12 +200,35 @@
             //Act
             $test_shoes->addStore($test_store);
             $test_shoes->addStore($test_store2);
-            
+
             $result= $test_shoes->getStores();
 
-            var_dump($result);
             //Assert
             $this->assertEquals($test_shoes->getStores(), [$test_store, $test_store2]);
         }
+
+        function testCheckAvailable()
+        {
+            ///Arrange
+
+            $id = 10;
+            $shoes = "check";
+            $test_shoes = new Brand ($id, $shoes);
+            $test_shoes->save();
+
+            $id2 = 120;
+            $shoes2 = "condition";
+            $test_shoes2 = new Brand ($id2, $shoes2);
+            $test_shoes2->save();
+
+            $check = "meet";
+
+            //Act
+            $result = Brand::checkAvailable($check);
+
+            //Assert
+            $this->assertEquals($result, true);
+        }
+
     }
 ?>

@@ -98,7 +98,25 @@
             return $related_shoes;
         }
 
-        
+        static function checkAvailable($check_store)
+        {
+            $answer=true;
+            $store_array= array();
+            $all_stores = Store::getAll();
+
+            foreach ($all_stores as $store)
+            {
+                $one = $store->getStore();
+                array_push($store_array, $one);
+            }
+
+            if (in_array($check_store, $store_array))
+            {
+                $answer= false;
+            }
+            return $answer;
+        }
+
 }
 
 ?>

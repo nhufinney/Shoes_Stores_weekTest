@@ -1,8 +1,8 @@
 
-<h1>{{ store.getStore }}</h1>
+<h1>Shoes Store: {{ store.getStore }}</h1>
 
 {% if related_shoes is not empty %}
-    <p>Here are the shoes ON SALE in this store! HURRY UP!:</p>
+    <p>Here are the brands of shoes ON SALE in this store! HURRY UP!:</p>
     <ul>
         {% for shoes in related_shoes %}
             <li>{{ shoes.getShoes }}</li>
@@ -10,11 +10,9 @@
     </ul>
 {% endif %}
 
-<h4>Add a new brand shoes to this store:</h4>
-
 <form action='/add_shoes' method='post'>
     <input id="store_id" name="store_id" type="hidden" value="{{ store.getId }}">
-    <label for="shoes_id">Select a brand of shoes</label>
+    <label for="shoes_id">Add a new brand of shoes to this store</label>
     <select id='shoes_id' name='shoes_id' type='text'>
       {% for shoes in all_shoes %}
         <option value="{{ shoes.getId }}"> {{ shoes.getShoes }} </option>
@@ -22,7 +20,19 @@
     </select>
     <button type='submit'>Add shoes for this store</button>
 </form>
+<br><br><br>
+<form action="/stores/{{ store.getId }}" method="post">
+          <input name="_method" type="hidden" value="patch">
 
-<p><a href="/stores/{{ store.getId }}/edit">Edit this store</a></p>
+          <label for="store">Rename this store:</label>
+          <input id="store" name="store" type="text">
 
-<p><a href='/'>Home</a></p>
+          <button type="submit">Rename</button>
+        </form>
+
+        <form action="/stores/{{ store.getId }}" method="post">
+          <input name="_method" type="hidden" value="delete">
+
+          <button type="submit">Delete this store!</button>
+        </form>
+<p><a href='/'>Home Page</a></p>
