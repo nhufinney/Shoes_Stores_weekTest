@@ -98,21 +98,7 @@
             return $related_shoes;
         }
 
-        // static function searchStores($search_store)
-        // {
-        //     $query = $GLOBALS['DB']->query("SELECT * FROM stores WHERE store LIKE '%{$search_title}%';");
-        //     $search_store = $query->fetchAll(PDO::FETCH_ASSOC);
-        //     $stores = array();
-        //
-        //     foreach($search_store as $store) {
-        //         $new_store = new Store($store['id'], $store['store']);
-        //         array_push($stores, $new_store);
-        //     }
-        //     return $stores;
-        // }
-
-
-
+        
 }
 
 ?>

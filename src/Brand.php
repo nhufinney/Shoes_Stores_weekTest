@@ -73,44 +73,29 @@
             $GLOBALS['DB']->exec("INSERT INTO brands_stores (shoes_id, store_id) VALUES ({$this->getId()}, {$store->getId()});");
         }
 
-        function getStores()
-        {
-            $query = $GLOBALS['DB']->query("SELECT stores.* FROM
-                brands  JOIN brands_stores ON (brands.id =  brands_stores.shoes_id)
-                        JOIN stores ON ( brands_stores.store_id = stores.id)
-                        WHERE brands.id = {$this->getId()};");
-            $stores_temp = $query->fetch(PDO::FETCH_ASSOC);
-            $related_stores = array();
-            foreach($stores_temp as $store) {
-                $id = $store['id'];
-                $a_store = $store['store'];
-                $new_store = new Store($id, $a_store);
-                array_push($related_stores, $new_store);
-            }
-            return $related_stores;
-            return $stores_temp;
-        }
-
-        // function update($new_shoes)
-        // {
-        //     $GLOBALS['DB']->exec("UPDATE shoes SET shoes = '{$new_shoes}' WHERE id = {$this->getId()};");
-        //     $this->setShoes($new_shoes);
-        // }
-
         function deleteBrand()
         {
             $GLOBALS['DB']->exec("DELETE FROM brands WHERE id = {$this->getId()};");
             $GLOBALS['DB']->exec("DELETE FROM brands_stores WHERE shoes_id = {$this->getId()};");
         }
 
-        // function addTask($task)
-        // {
-        //     //save the id of the current category with the id of the input $task into a row in the join table called brands_stores.
-        //     $GLOBALS['DB']->exec("INSERT INTO brands_stores (shoes_id, task_id) VALUES ({$this->getId()}, {$task->getId()});");
-        // }
+        function getStores()
+        {
+            $query = $GLOBALS['DB']->query("SELECT stores.* FROM
+                brands JOIN brands_stores ON (brands.id = brands_stores.shoes_id)
+                            JOIN stores ON (brands_stores.store_id = stores.id)
+                WHERE brands.id= {$this->getId()};");
+            $related_stores = array();
+            $returned_stores = $query->fetchAll(PDO::FETCH_ASSOC);
 
+            foreach ($returned_stores as $store)
+            {
+                $new_store = new Store ($store['id'], $store['store']);
+                array_push($related_stores, $new_store);
+            }
+            return $related_stores;
+        }
 
     }
-
 
 ?>

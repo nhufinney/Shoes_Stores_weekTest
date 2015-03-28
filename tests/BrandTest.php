@@ -173,8 +173,8 @@
             //Act
             $test_shoes->addStore($test_store);
             $test_shoes->addStore($test_store2);
-            $result = $test_shoes->getStores();
-            var_dump($result);
+            // $result = $test_shoes->getStores();
+            // var_dump($result);
 
             //Assert
             $this->assertEquals($test_shoes->getStores(), [$test_store, $test_store2]);
@@ -199,20 +199,15 @@
             $test_store2 = new Store($id2, $store2);
             $test_store2->save();
 
-            $store3 = "Epi shoes";
-            $id3 = 21;
-            $test_store3 = new Store($id3, $store3);
-            $test_store3->save();
-
             //Act
             $test_shoes->addStore($test_store);
             $test_shoes->addStore($test_store2);
-            $test_shoes->addStore($test_store3);
+            
             $result= $test_shoes->getStores();
 
             var_dump($result);
             //Assert
-            //$this->assertEquals($test_shoes->getStores(), [$test_store, $test_store2]);
+            $this->assertEquals($test_shoes->getStores(), [$test_store, $test_store2]);
         }
     }
 ?>
