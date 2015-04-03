@@ -31,12 +31,9 @@
     $app->post("/shoes", function() use ($app) {
         $shoes = $_POST['shoes'];
         $id = null;
-        $result = Brand::checkAvailable($shoes);
-        if ($result = false)
-            {
-                $new_shoes = new Brand($id, $shoes);
-                $new_shoes->save();
-            }
+        $new_shoes = new Brand($id, $shoes);
+        $new_shoes->save();
+
         return $app['twig']->render('brands.html.twig', array('all_shoes' => Brand::getAll()));
     });
 
@@ -68,12 +65,9 @@
     $app->post("/stores", function() use ($app) {
         $store = $_POST['store'];
         $id = null;
-        $result = Store::checkAvailable($store);
-        if ($result = false)
-        {
-            $new_store = new Store($id, $store);
-            $new_store->save();
-        }
+        $new_store = new Store($id, $store);
+        $new_store->save();
+        
         return $app['twig']->render('stores.html.twig', array('all_stores' => Store::getAll()));
     });
 
