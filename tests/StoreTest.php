@@ -203,14 +203,14 @@
         {
             //Arrange
             $id = 1;
-            $shoes = "XOXO";
-            $test_shoes = new Brand($id, $shoes);
-            $test_shoes->save();
+            $shoe = "XOXO";
+            $test_shoe = new Brand($id, $shoe);
+            $test_shoe->save();
 
             $id = 2;
-            $shoes2 = "Mango";
-            $test_shoes2 = new Brand($id, $shoes2);
-            $test_shoes2->save();
+            $shoe2 = "Mango";
+            $test_shoe2 = new Brand($id, $shoe2);
+            $test_shoe2->save();
 
             $store = "Nhu Finney";
             $id = null;
@@ -218,25 +218,25 @@
             $test_store->save();
 
             //Act
-            $test_store->addShoes($test_shoes);
-            $test_store->addShoes($test_shoes2);
+            $test_store->addShoes($test_shoe);
+            $test_store->addShoes($test_shoe2);
 
             //Assert
-            $this->assertEquals($test_store->getShoes(), [$test_shoes, $test_shoes2]);
+            $this->assertEquals($test_store->getShoes(), [$test_shoe, $test_shoe2]);
         }
 
         function testGetShoes()
         {
             ///Arrange
             $id = 1;
-            $shoes = "DC Shoes";
-            $test_shoes = new Brand($id, $shoes);
-            $test_shoes->save();
+            $shoe = "DC Shoes";
+            $test_shoe = new Brand($id, $shoe);
+            $test_shoe->save();
 
             $id = 2;
-            $shoes2 = "Dockers";
-            $test_shoes2 = new Brand($id, $shoes2);
-            $test_shoes2->save();
+            $shoe2 = "Dockers";
+            $test_shoe2 = new Brand($id, $shoe2);
+            $test_shoe2->save();
 
             $store = "Nhu Finney";
             $id = null;
@@ -244,38 +244,13 @@
             $test_store->save();
 
             //Act
-            $test_store->addShoes($test_shoes);
-            $test_store->addShoes($test_shoes2);
+            $test_store->addShoes($test_shoe);
+            $test_store->addShoes($test_shoe2);
 
             //Assert
-            $this->assertEquals($test_store->getShoes(), [$test_shoes, $test_shoes2]);
+            $this->assertEquals($test_store->getShoes(), [$test_shoe, $test_shoe2]);
         }
 
-    //     function testSearchStores()
-    //     {
-    //         //Arrange
-    //         $id = null;
-    //         $store = "Liz Java";
-    //         $test_store = new Store($id, $store);
-    //         $test_store->save();
-    //
-    //         $id2 = null;
-    //         $store2 = "Nhu PHP";
-    //         $test_store2 = new Store($id2, $store2);
-    //         $test_store2->save();
-    //
-    //         $id3 = null;
-    //         $store3 = "Crazy PHP";
-    //         $test_store3= new Store($id, $store3);
-    //         $test_store3->save();
-    //
-    //         //Act
-    //         $search_store = "PHP";
-    //         $result = Store::searchStores($search_store);
-    //
-    //         //Assert
-    //         $this->assertEquals([$test_store2, $test_store3], $result);
-    //     }
-    //
+
      }
 ?>

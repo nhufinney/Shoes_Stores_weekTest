@@ -2,12 +2,12 @@
     class Store
     {
         private $id;
-        private $store;
+        private $store_name;
 
-        function __construct($id = null, $store)
+        function __construct($id = null, $store_name)
         {
             $this->id = $id;
-            $this->store = $store;
+            $this->store_name = $store_name;
         }
 
         function setId($new_id)
@@ -22,17 +22,17 @@
 
         function setStore($new_store)
         {
-            $this->store = $new_store;
+            $this->store_name = $new_store;
         }
 
         function getStore()
         {
-            return $this->store;
+            return $this->store_name;
         }
 
         function save()
         {
-            $statement = $GLOBALS['DB']->query("INSERT INTO stores (store) VALUES ('{$this->getStore()}') RETURNING id;");
+            $statement = $GLOBALS['DB']->query("INSERT INTO stores (store_name) VALUES ('{$this->getStore()}') RETURNING id;");
             $result = $statement->fetch(PDO::FETCH_ASSOC);
             $this->setId($result['id']);
         }
@@ -40,12 +40,12 @@
         static function getAll()
         {
             $returned_stores = $GLOBALS['DB']->query("SELECT * FROM stores;");
-            $stores = array();
-            foreach($returned_stores as $store) {
-                $new_store = new Store($store['id'], $store['store']);
-                array_push($stores, $new_store);
+            $store_names = array();
+            foreach($returned_stores as $store_name) {
+                $new_store = new Store($store_name['id'], $store_name['store_name']);
+                array_push($store_names, $new_store);
             }
-            return $stores;
+            return $store_names;
         }
 
         static function deleteAll()
@@ -56,11 +56,11 @@
         static function find($search_id)
         {
             $found_stores = null;
-            $stores = Store::getAll();
-            foreach($stores as $store) {
-                $store_id = $store->getId();
-                if ($store_id == $search_id) {
-                    $found_stores = $store;
+            $store_names = Store::getAll();
+            foreach($store_names as $store_name) {
+                $store_name_id = $store_name->getId();
+                if ($store_name_id == $search_id) {
+                    $found_stores = $store_name;
                 }
             }
             return $found_stores;
@@ -74,26 +74,26 @@
 
         function update($new_store)
         {
-            $GLOBALS['DB']->exec("UPDATE stores SET store = '{$new_store}' WHERE id = {$this->getId()};");
+            $GLOBALS['DB']->exec("UPDATE stores SET store_name = '{$new_store}' WHERE id = {$this->getId()};");
             $this->setStore($new_store);
         }
 
-        function addShoes($shoes)
+        function addShoes($shoe)
         {
-            $GLOBALS['DB']->exec("INSERT INTO brands_stores (shoes_id, store_id) VALUES ({$shoes->getId()}, {$this->getId()});");
+            $GLOBALS['DB']->exec("INSERT INTO brands_stores (shoe_id, store_id) VALUES ({$shoe->getId()}, {$this->getId()});");
         }
 
         function getShoes()
         {
             $query = $GLOBALS['DB']->query("SELECT brands.* FROM
                 stores  JOIN brands_stores ON (stores.id =  brands_stores.store_id)
-                        JOIN brands ON ( brands_stores.shoes_id = brands.id)
+                        JOIN brands ON ( brands_stores.shoe_id = brands.id)
                         WHERE stores.id = {$this->getId()};");
-            $shoes_temp = $query->fetchAll(PDO::FETCH_ASSOC);
+            $shoe_temps = $query->fetchAll(PDO::FETCH_ASSOC);
             $related_shoes = array();
-            foreach($shoes_temp as $shoes) {
-                $new_shoes = new Brand($shoes['id'], $shoes['shoes']);
-                array_push($related_shoes, $new_shoes);
+            foreach($shoe_temps as $shoe) {
+                $new_shoe = new Brand($shoe['id'], $shoe['shoe']);
+                array_push($related_shoes, $new_shoe);
             }
             return $related_shoes;
         }
@@ -101,16 +101,16 @@
         static function checkAvailable($check_store)
         {
             $answer=true;
-            $store_array= array();
+            $store_name_array= array();
             $all_stores = Store::getAll();
 
-            foreach ($all_stores as $store)
+            foreach ($all_stores as $store_name)
             {
-                $one = $store->getStore();
-                array_push($store_array, $one);
+                $one = $store_name->getStore();
+                array_push($store_name_array, $one);
             }
 
-            if (in_array($check_store, $store_array))
+            if (in_array($check_store, $store_name_array))
             {
                 $answer= false;
             }

@@ -1,11 +1,11 @@
 
 
-<h1>List of all Spring-shoes 2015! HOT!</h1>
+<h1>List of all Spring-shoe 2015! HOT!</h1>
 
 {% if all_shoes is not empty %}
     <ul>
-        {% for shoes in all_shoes %}
-            <li><a href="/shoes/{{ shoes.getId }}">{{ shoes.getShoes }}</a></li>
+        {% for shoe in all_shoes %}
+            <li><a href="/shoe/{{ shoe.getId }}">{{ shoe.getShoe }}</a></li>
         {% endfor %}
     </ul>
 {% endif %}
@@ -13,8 +13,8 @@
 <br><br>
 
 <form action='/shoes' method='post'>
-    <label for='shoes'>Don't be an old-fashioned at Epicodus! Update a new brand shoes here</label>
-    <input id='shoes' name='shoes' type='text'>
+    <label for='shoe'>Don't be an old-fashioned at Epicodus! Update a new brand shoe here</label>
+    <input id='shoe' name='shoe' type='text'>
 
     <button type='submit'>Add a new brand</button>
 </form>

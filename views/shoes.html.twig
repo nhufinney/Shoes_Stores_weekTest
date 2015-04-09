@@ -1,4 +1,4 @@
-<h1>Shoes Brand: {{ shoes.getShoes }}</h1>
+<h1>Shoes Brand: {{ shoe.getShoe }}</h1>
 
     {% if stores is not empty %}
         <p>Here are stores selling this shoes:</p>
@@ -11,7 +11,7 @@
 
     <p>Add a new store selling this shoes:</p>
     <form action='/add_stores' method='post'>
-        <input id="shoes_id" name="shoes_id" type="hidden" value="{{ shoes.getId }}">
+        <input id="shoe_id" name="shoe_id" type="hidden" value="{{ shoe.getId }}">
         <label for="store_id">Select a store in the list</label>
         <select id='store_id' name='store_id' type='text'>
           {% for store in all_stores %}
