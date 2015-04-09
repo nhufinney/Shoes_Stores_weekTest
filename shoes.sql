@@ -4,7 +4,7 @@
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
-SET client_encoding = 'UTF8';
+SET client_encoding = 'SQL_ASCII';
 SET standard_conforming_strings = on;
 SET check_function_bodies = false;
 SET client_min_messages = warning;
@@ -35,7 +35,7 @@ SET default_with_oids = false;
 
 CREATE TABLE brands (
     id integer NOT NULL,
-    shoes character varying
+    shoe character varying
 );
 
 
@@ -68,9 +68,8 @@ ALTER SEQUENCE brands_id_seq OWNED BY brands.id;
 
 CREATE TABLE brands_stores (
     id integer NOT NULL,
-    shoes_id integer,
-    store_id integer,
-    sold boolean DEFAULT false
+    shoe_id integer,
+    store_id integer
 );
 
 
@@ -103,7 +102,7 @@ ALTER SEQUENCE brands_stores_id_seq OWNED BY brands_stores.id;
 
 CREATE TABLE stores (
     id integer NOT NULL,
-    store character varying
+    store_name character varying
 );
 
 
@@ -155,25 +154,12 @@ ALTER TABLE ONLY stores ALTER COLUMN id SET DEFAULT nextval('stores_id_seq'::reg
 -- Data for Name: brands; Type: TABLE DATA; Schema: public; Owner: Guest
 --
 
-COPY brands (id, shoes) FROM stdin;
-1	Nike
-2	Nike
-3	Adidas
-4	Mc Comb
-5	Mango
-6	MamaPizza
-7	Converse
-8	Dora
-9	Dora
-10	Dora
-11	Converse
-12	Mango
-13	Dora
-14	Mango
-15	MamaPizza
-16	Dora
-17	Dora
-18	Dora
+COPY brands (id, shoe) FROM stdin;
+1	Mango
+2	Guava
+3	Bubberry
+4	Gucci
+5	Converse
 \.
 
 
@@ -181,29 +167,23 @@ COPY brands (id, shoes) FROM stdin;
 -- Name: brands_id_seq; Type: SEQUENCE SET; Schema: public; Owner: Guest
 --
 
-SELECT pg_catalog.setval('brands_id_seq', 18, true);
+SELECT pg_catalog.setval('brands_id_seq', 5, true);
 
 
 --
 -- Data for Name: brands_stores; Type: TABLE DATA; Schema: public; Owner: Guest
 --
 
-COPY brands_stores (id, shoes_id, store_id, sold) FROM stdin;
-1	2	6	f
-2	2	6	f
-3	2	6	f
-4	2	6	f
-5	5	7	f
-6	5	7	f
-9	5	6	f
-10	5	7	f
-11	6	7	f
-12	6	6	f
-13	3	8	f
-14	3	8	f
-15	4	8	f
-16	5	8	f
-17	6	8	f
+COPY brands_stores (id, shoe_id, store_id) FROM stdin;
+1	2	3
+2	2	3
+3	2	2
+4	2	4
+7	3	10
+8	4	10
+9	4	8
+13	5	9
+14	2	9
 \.
 
 
@@ -211,18 +191,19 @@ COPY brands_stores (id, shoes_id, store_id, sold) FROM stdin;
 -- Name: brands_stores_id_seq; Type: SEQUENCE SET; Schema: public; Owner: Guest
 --
 
-SELECT pg_catalog.setval('brands_stores_id_seq', 17, true);
+SELECT pg_catalog.setval('brands_stores_id_seq', 14, true);
 
 
 --
 -- Data for Name: stores; Type: TABLE DATA; Schema: public; Owner: Guest
 --
 
-COPY stores (id, store) FROM stdin;
-4	Portland Footwear
-6	Portland Nike Store
-7	Obama Foot Shop
-8	Epicodus 
+COPY stores (id, store_name) FROM stdin;
+7	Portland Shoes Store
+8	Nike Portland
+9	Portland Adidas Chain
+10	Elephant Tiny Feet
+12	Teddy Bear
 \.
 
 
@@ -230,7 +211,7 @@ COPY stores (id, store) FROM stdin;
 -- Name: stores_id_seq; Type: SEQUENCE SET; Schema: public; Owner: Guest
 --
 
-SELECT pg_catalog.setval('stores_id_seq', 8, true);
+SELECT pg_catalog.setval('stores_id_seq', 12, true);
 
 
 --
